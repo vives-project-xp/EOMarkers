@@ -18,4 +18,4 @@
 
 # Canvas
 
-    ![Canvas](./img/project_canvas.png)
+- ![Canvas](./img/project_canvas.png "Canvas")
