@@ -6,8 +6,8 @@
 
 # Table of contents
 
-    [Planning](#planning)
-    [Canvas](#canvas)
+    ![Planning](#planning)
+    ![Canvas](#canvas)
 
 # Planning
 
@@ -18,4 +18,4 @@
 
 # Canvas
 
-    [Canvas](./img/project_canvas.pdf)
+    ![Canvas](./img/project_canvas.pdf)
