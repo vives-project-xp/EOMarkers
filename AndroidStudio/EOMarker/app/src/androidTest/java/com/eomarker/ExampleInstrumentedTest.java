@@ -1,4 +1,4 @@
-package com.wizzardindustries.eomarker;
+package com.eomarker;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.wizzardindustries.eomarker", appContext.getPackageName());
+        assertEquals("com.eomarker", appContext.getPackageName());
     }
 }

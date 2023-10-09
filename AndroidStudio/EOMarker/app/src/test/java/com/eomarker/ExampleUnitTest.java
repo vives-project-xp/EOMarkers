@@ -1,4 +1,4 @@
-package com.wizzardindustries.eomarker;
+package com.eomarker;
 
 import org.junit.Test;
 

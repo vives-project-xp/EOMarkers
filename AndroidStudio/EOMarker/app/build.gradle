@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace 'com.wizzardindustries.eomarker'
-    compileSdk 32
+    namespace 'com.eomarker'
+    compileSdk 34
 
     defaultConfig {
-        applicationId "com.wizzardindustries.eomarker"
+        applicationId "com.eomarker"
         minSdk 21
-        targetSdk 32
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -31,8 +31,14 @@ android {
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.android.material:material:1.10.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+
+    implementation "com.github.skydoves:colorpickerview:2.3.0"
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.4'
+    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
 }
