@@ -12,7 +12,7 @@ Adafruit_NeoPixel sk6812(NUM_PIXELS, PIN, NEO_GRBW + NEO_KHZ800);
 
 const char* ssid = "SSID";
 const char* password = "PASSWORD";
-const char* mqtt_server = "BROKER";
+const char* mqtt_server = "mqtt.devbit.be";
 
 const String topic = "EOMarker";
 
