@@ -89,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
             tv.setText("disconnected");
 
         }
-        String color = "{r:" + red + ",g:" + green + ",b:" + blue +",w:" + white + "}";
+        String color = red + "," + green + "," + blue;
 
-        publishMessage("PM/EOMarkers/" + macAddress.getText() + "/color", color);
+        publishMessage("PM/EOMarkers/" + macAddress.getText() + "/rgb", color);
     }
 }
