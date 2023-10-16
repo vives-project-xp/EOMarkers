@@ -118,7 +118,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 31fee6ce-956e-4978-ae1a-5a086f38b745)
     )
-    (fp_text value "Conn_01x08_Socket" (at 0 20.55) (layer "F.Fab")
+    (fp_text value "USB-C" (at 0 20.55) (layer "F.Fab")
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp ececeeab-226e-4a67-a393-1fb63fb4ce75)
     )
