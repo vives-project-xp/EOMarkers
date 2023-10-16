@@ -4,17 +4,14 @@
 #include "Freenove_WS2812_Lib_for_ESP32.h"
 #include <ArduinoJson.h>
 #include <EEPROM.h>
+#include "config.h"
+
+using namespace EOMarker;
 
 #define PIN 10  // The ESP32 pin GPIO16 connected to sk6812
 #define NUM_PIXELS 24   // The number of LEDs (pixels) on sk6812 LED strip
 
 Adafruit_NeoPixel sk6812(NUM_PIXELS, PIN, NEO_GRBW + NEO_KHZ800);
-
-const char* ssid = "SSID";
-const char* password = "PASSWORD";
-const char* mqtt_server = "mqtt.devbit.be";
-
-const String topic = "EOMarker";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -46,21 +43,11 @@ void setup() {
     strip.setLedColorData(0,255,0,0);
     strip.show();
      setup_wifi();
-    client.setServer(mqtt_server, 1883);
+    client.setServer(Config::MQTT_BROKER, Config::MQTT_PORT);
     client.setCallback(callback);
   }
 
 void loop() {
-  /*if (Serial.available() > 0) {
-  String rgb = Serial.readString();
-  Serial.println(rgb);
-  for(int pixel = 0; pixel < NUM_PIXELS ; pixel++){
-    sk6812.setPixelColor(pixel, sk6812.Color(getValue(rgb, ';', 0).toInt(), getValue(rgb, ';', 1).toInt(), getValue(rgb, ';', 2).toInt(),getValue(rgb, ';', 3).toInt()));  // it only takes effect if pixels.show() is called
-  }
-        sk6812.show();   
-        // update to the sk6812 Led Strip
-  }*/
-
   if (!client.connected()) {
     strip.setLedColorData(255,255,0,0);
     strip.show();
@@ -83,9 +70,9 @@ void setup_wifi() {
   // We start by connecting to a WiFi network
   Serial.println();
   Serial.print("Connecting to ");
-  Serial.println(ssid);
+  Serial.println(Config::WIFI_SSID);
 
-  WiFi.begin(ssid, password);
+  WiFi.begin(Config::WIFI_SSID, Config::WIFI_PASS);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -130,11 +117,11 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("ESP8266Client")) {
+    if (client.connect("EOMarker")) {
       Serial.println("connected");
       // Subscribe
-      client.subscribe((topic + '/' + WiFi.macAddress() + "/color").c_str());
-      client.publish((topic + '/'  + WiFi.macAddress() + "/alive").c_str() , "true");
+      client.subscribe((Config::MQTT_BASE_TOPIC + '/' + WiFi.macAddress() + "/color").c_str());
+      client.publish((Config::MQTT_BASE_TOPIC + '/'  + WiFi.macAddress() + "/alive").c_str() , "true");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
