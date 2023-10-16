@@ -17,7 +17,7 @@ import com.skydoves.colorpickerview.listeners.ColorListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String BROKER_URL = "tcp://mqtt.devbit.be:1883";
+    private static final String BROKER_URL = "tcp://" + R.string.MQTT_BROKER;
     private static final String CLIENT_ID = "EOMarker";
     private MqttHandler mqttHandler;
     EditText red;
