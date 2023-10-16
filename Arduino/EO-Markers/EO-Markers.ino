@@ -3,19 +3,15 @@
 #include <PubSubClient.h> 
 #include <EEPROM.h>
 #include "config.h"
-
 using namespace EOMarker;
-
 #define PIN 10  // The ESP32 pin GPIO16 connected to sk6812
 #define NUM_PIXELS 24   // The number of LEDs (pixels) on sk6812 LED strip
-
 Adafruit_NeoPixel sk6812(NUM_PIXELS, PIN, NEO_GRBW + NEO_KHZ800);
-
 WiFiClient espClient;
 PubSubClient client(espClient);
 
  String topic = Config::MQTT_BASE_TOPIC;
-  
+
 #define RGB_COUNT     1
 #define RGB_PIN       8
 #define RGB_CHANNEL   0
@@ -25,7 +21,6 @@ int r = 0;
 int g = 0;
 int b = 0;
 int w = 0;
-
 void setup() {
   Serial.begin(115200);
   pinMode(sensorpin, INPUT);
@@ -67,9 +62,7 @@ void setup_wifi() {
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(Config::WIFI_SSID);
-
   WiFi.begin(Config::WIFI_SSID, Config::WIFI_PASS);
-
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
@@ -88,7 +81,17 @@ void callback(char* topic, byte* message, unsigned int length) {
     Serial.print((char)message[i]);
   }
   Serial.println();
+<<<<<<< HEAD
 
+=======
+  /*DynamicJsonDocument doc(1024);
+  deserializeJson(doc, message);
+    r = doc["r"];
+    g = doc["g"];
+    b = doc["b"];
+    w = doc["w"];
+    */
+>>>>>>> db4a30fa31592e55e7ccc16d2d71a9d9116053a6
     char* ptr = strtok((char*)message, ",");  // delimiter
     char *colors[3]; // an array of pointers to the pieces of the above array after strtok()
     byte index = 0;
@@ -120,10 +123,14 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("EOMarker")) {
-      Serial.println("connected");
+    Serial.print("Connecting: ");
+    Serial.print(WiFi.macAddress().c_str());
+    Serial.print(" : ");
+    Serial.print(Config::MQTT_PASS);
+    if (client.connect(WiFi.macAddress().c_str(), WiFi.macAddress().c_str(), Config::MQTT_PASS)) {
+      Serial.println(" connected");
       // Subscribe
-      client.subscribe((topic + '/' + WiFi.macAddress() + "/color").c_str());
+      client.subscribe((topic + '/' + WiFi.macAddress() + "/rgb").c_str());
       sendAlive();
     } else {
       Serial.print("failed, rc=");
