@@ -1,8 +1,6 @@
 #include <Adafruit_NeoPixel.h>
 #include <WiFi.h>
 #include <PubSubClient.h> 
-#include "Freenove_WS2812_Lib_for_ESP32.h"
-#include <ArduinoJson.h>
 #include <EEPROM.h>
 #include "config.h"
 
@@ -21,7 +19,7 @@ PubSubClient client(espClient);
 #define RGB_COUNT     1
 #define RGB_PIN       8
 #define RGB_CHANNEL   0
-Freenove_ESP32_WS2812 strip = Freenove_ESP32_WS2812(RGB_COUNT, RGB_PIN, RGB_CHANNEL, TYPE_GRB);
+
 int sensorpin = 1;
 int r = 0;
 int g = 0;
@@ -39,8 +37,6 @@ void setup() {
    w = EEPROM.read(3);
    Serial.print("reading from eeprom");
    Serial.println(r);
-    strip.setLedColorData(0,255,0,0);
-    strip.show();
      setup_wifi();
     client.setServer(Config::MQTT_BROKER, Config::MQTT_PORT);
     client.setCallback(callback);
@@ -50,12 +46,8 @@ bool prevVal = false;
 
 void loop() {
   if (!client.connected()) {
-    strip.setLedColorData(255,255,0,0);
-    strip.show();
     reconnect();
   }
-    strip.setLedColorData(0,255,0,0);
-    strip.show();
   client.loop();
   int val = digitalRead(sensorpin);
   if(val != prevVal){
@@ -96,12 +88,23 @@ void callback(char* topic, byte* message, unsigned int length) {
     Serial.print((char)message[i]);
   }
   Serial.println();
-  DynamicJsonDocument doc(1024);
-  deserializeJson(doc, message);
-  r = doc["r"];
-    g = doc["g"];
-    b = doc["b"];
-    w = doc["w"];
+
+    char* ptr = strtok((char*)message, ",");  // delimiter
+    char *colors[3]; // an array of pointers to the pieces of the above array after strtok()
+    byte index = 0;
+     while (ptr != NULL)
+     {
+        colors[index] = ptr;
+        index++;
+        ptr = strtok(NULL, ",");
+     }
+     r = atoi(colors[0]);
+     g = atoi(colors[1]);
+     b = atoi(colors[2]);
+    Serial.println(r);
+    Serial.println(g);
+    Serial.println(b);
+
     EEPROM.write(0, r);
     EEPROM.write(1, g);
     EEPROM.write(2,b);
