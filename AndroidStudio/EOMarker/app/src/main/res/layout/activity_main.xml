@@ -86,4 +86,12 @@
         app:layout_constraintStart_toStartOf="@+id/colorRed"
         app:layout_constraintTop_toBottomOf="@+id/colorGreen" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="185dp"
+        android:layout_height="52dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="68dp"
+        tools:layout_editor_absoluteY="649dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

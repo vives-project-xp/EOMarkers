@@ -2,6 +2,7 @@ package com.eomarker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -17,8 +18,9 @@ import com.skydoves.colorpickerview.listeners.ColorListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String BROKER_URL = "tcp://" + R.string.MQTT_BROKER;
-    private static final String CLIENT_ID = "EOMarker";
+    private static String BROKER_URL = "";
+    private static String CLIENT_ID = "";
+    private static String CLIENT_PASS = "";
     private MqttHandler mqttHandler;
     EditText red;
     EditText green;
@@ -29,8 +31,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        BROKER_URL = getResources().getString(R.string.MQTT_BROKER);
+        CLIENT_ID = getResources().getString(R.string.MQTT_USER);
+        CLIENT_PASS = getResources().getString(R.string.MQTT_PASS);
+
         mqttHandler = new MqttHandler();
-        mqttHandler.connect(BROKER_URL,CLIENT_ID);
+        mqttHandler.connect(BROKER_URL,CLIENT_ID, CLIENT_PASS);
+        Toast.makeText(this, BROKER_URL, Toast.LENGTH_SHORT).show();
          red = findViewById(R.id.colorRed);
          green = findViewById(R.id.colorGreen);
          blue = findViewById(R.id.colorBlue);
@@ -62,8 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void publishMessage(String topic, String message){
-        Toast.makeText(this, "Publishing message: " + message, Toast.LENGTH_SHORT).show();
-        mqttHandler.publish(topic,message);
+        if(mqttHandler.connected()) {
+            Toast.makeText(this, "Publishing message: " + message, Toast.LENGTH_SHORT).show();
+            mqttHandler.publish(topic, message);
+        }
     }
     private void subscribeToTopic(String topic){
         Toast.makeText(this, "Subscribing to topic "+ topic, Toast.LENGTH_SHORT).show();
@@ -71,10 +80,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateColor(String red, String green, String blue, String white){
+        TextView tv = findViewById(R.id.textView);
+        mqttHandler.connect(BROKER_URL,CLIENT_ID, CLIENT_PASS);
 
+        if(mqttHandler.connected()){
+            tv.setText("connected");
+        }else{
+            tv.setText("disconnected");
 
+        }
         String color = "{r:" + red + ",g:" + green + ",b:" + blue +",w:" + white + "}";
 
-        publishMessage("EOMarker/" + macAddress.getText() + "/color", color);
+        publishMessage("PM/EOMarkers/" + macAddress.getText() + "/color", color);
     }
 }
