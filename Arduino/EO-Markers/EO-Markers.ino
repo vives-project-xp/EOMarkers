@@ -16,6 +16,8 @@ Adafruit_NeoPixel sk6812(NUM_PIXELS, PIN, NEO_GRBW + NEO_KHZ800);
 WiFiClient espClient;
 PubSubClient client(espClient);
 
+ String topic = Config::MQTT_BASE_TOPIC;
+  
 #define RGB_COUNT     1
 #define RGB_PIN       8
 #define RGB_CHANNEL   0
@@ -44,7 +46,7 @@ void setup() {
     client.setCallback(callback);
   }
 
-
+bool prevVal = false;
 
 void loop() {
   if (!client.connected()) {
@@ -56,10 +58,14 @@ void loop() {
     strip.show();
   client.loop();
   int val = digitalRead(sensorpin);
-  if(val == 1){
-    setColor(r,g,b,w);
-  }else{
-    setColor(0,0,0,0);
+  if(val != prevVal){
+    prevVal = val;
+    if(val == 1){
+      setColor(r,g,b,w);
+      sendAlive();
+    }else{
+      setColor(0,0,0,0);
+    }
   }
       sk6812.show();  
 }
@@ -114,8 +120,8 @@ void reconnect() {
     if (client.connect("EOMarker")) {
       Serial.println("connected");
       // Subscribe
-      client.subscribe((Config::MQTT_BASE_TOPIC + '/' + WiFi.macAddress() + "/color").c_str());
-      client.publish((Config::MQTT_BASE_TOPIC + '/'  + WiFi.macAddress() + "/alive").c_str() , "true");
+      client.subscribe((topic + '/' + WiFi.macAddress() + "/color").c_str());
+      sendAlive();
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -128,5 +134,9 @@ void reconnect() {
 void setColor(int r, int g, int b , int w){
     for(int pixel = 0; pixel < NUM_PIXELS ; pixel++){
       sk6812.setPixelColor(pixel, sk6812.Color(r,g,b,w));  // it only takes effect if pixels.show() is called
+  }
 }
+
+void sendAlive(){
+        client.publish((topic + "/alive").c_str() , WiFi.macAddress().c_str());
 }
