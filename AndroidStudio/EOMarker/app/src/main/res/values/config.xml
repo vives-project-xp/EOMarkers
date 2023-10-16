@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-        <string name="MQTT_BROKER">mqtt.devbit.be:1883</string>
-</resources>
