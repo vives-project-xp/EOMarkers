@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         String color = red + "," + green + "," + blue;
-
-        publishMessage("PM/EOMarkers/" + macAddress.getText() + "/rgb", color);
+        String mac = macAddress.getText().toString().replace(":","");
+        publishMessage("PM/EOMarkers/" + mac  + "/rgb", color);
     }
 }

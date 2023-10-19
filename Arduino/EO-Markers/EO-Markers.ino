@@ -1,66 +1,92 @@
 #include <Adafruit_NeoPixel.h>
 #include <WiFi.h>
-#include <PubSubClient.h> 
-#include <EEPROM.h>
+#include <PubSubClient.h>
+#include <EEPROM>
 #include "config.h"
+
+// Namespace voor configuratievariabelen
 using namespace EOMarker;
-#define PIN 10  // The ESP32 pin GPIO16 connected to sk6812
-#define NUM_PIXELS 24   // The number of LEDs (pixels) on sk6812 LED strip
+
+// Definieer hardware-gerelateerde constanten
+#define PIN 10            // De ESP32-pin GPIO16 verbonden met sk6812
+#define NUM_PIXELS 24     // Het aantal LED's (pixels) op de sk6812 LED-strip
 Adafruit_NeoPixel sk6812(NUM_PIXELS, PIN, NEO_GRBW + NEO_KHZ800);
+
+// WiFi- en MQTT-clientinstellingen
 WiFiClient espClient;
 PubSubClient client(espClient);
+String topic = Config::MQTT_BASE_TOPIC;
 
- String topic = Config::MQTT_BASE_TOPIC;
+// RGB-pin en kanaal voor sensorinvoer
+#define RGB_COUNT 1
+#define RGB_PIN 8
+#define RGB_CHANNEL 0
 
-#define RGB_COUNT     1
-#define RGB_PIN       8
-#define RGB_CHANNEL   0
-
+// Pin voor sensorinput en kleurvariabelen
 int sensorpin = 1;
 int r = 0;
 int g = 0;
 int b = 0;
 int w = 0;
+
+bool prevVal = false;
+
 void setup() {
   Serial.begin(115200);
   pinMode(sensorpin, INPUT);
-   sk6812.begin();  // initialize sk6812 strip object (REQUIRED)
-     EEPROM.begin(4);
-   r = EEPROM.read(0);
-   g = EEPROM.read(1);
-   b = EEPROM.read(2);
-   w = EEPROM.read(3);
-   Serial.print("reading from eeprom");
-   Serial.println(r);
-     setup_wifi();
-    client.setServer(Config::MQTT_BROKER, Config::MQTT_PORT);
-    client.setCallback(callback);
-  }
 
-bool prevVal = false;
+  // Initialiseer sk6812 LED-strip
+  sk6812.begin();
+
+  // EEPROM-initialisatie en ophalen van opgeslagen kleurwaarden
+  EEPROM.begin(4);
+  r = EEPROM.read(0);
+  g = EEPROM.read(1);
+  b = EEPROM.read(2);
+  w = EEPROM.read(3);
+
+  Serial.println("Lezen van EEPROM:");
+  Serial.println("Rood: " + String(r));
+  Serial.println("Groen: " + String(g));
+  Serial.println("Blauw: " + String(b));
+
+  // WiFi- en MQTT-configuratie
+  setup_wifi();
+  client.setServer(Config::MQTT_BROKER, Config::MQTT_PORT);
+  client.setCallback(callback);
+}
 
 void loop() {
   if (!client.connected()) {
     reconnect();
   }
   client.loop();
+
+  // Lees de sensorwaarde
   int val = digitalRead(sensorpin);
-  if(val != prevVal){
+
+  // Vergelijk huidige sensorwaarde met vorige waarde
+  if (val != prevVal) {
     prevVal = val;
-    if(val == 1){
-      setColor(r,g,b,w);
+    if (val == 1) {
+      // Zet LED-kleur en stuur "alive" bericht als sensor is geactiveerd
+      setColor(r, g, b, w);
       sendAlive();
-    }else{
-      setColor(0,0,0,0);
+    } else {
+      // Zet LED-kleur uit als sensor niet is geactiveerd
+      setColor(0, 0, 0, 0);
     }
   }
-      sk6812.show();  
+
+  // Toon de LED-kleuren op de sk6812 LED-strip
+  sk6812.show();
 }
+
+// WiFi-configuratie
 void setup_wifi() {
   delay(10);
-  // We start by connecting to a WiFi network
   Serial.println();
-  Serial.print("Connecting to ");
+  Serial.print("Verbinden met ");
   Serial.println(Config::WIFI_SSID);
   WiFi.begin(Config::WIFI_SSID, Config::WIFI_PASS);
   while (WiFi.status() != WL_CONNECTED) {
@@ -68,85 +94,103 @@ void setup_wifi() {
     Serial.print(".");
   }
   Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
+  Serial.println("WiFi verbonden");
+  Serial.println("IP-adres: ");
   Serial.println(WiFi.localIP());
 }
+
+// MQTT-berichtverwerking
 void callback(char* topic, byte* message, unsigned int length) {
-  Serial.print("Message arrived on topic: ");
+  Serial.print("Bericht ontvangen op onderwerp: ");
   Serial.print(topic);
-  Serial.print(". Message: ");
-  
+  Serial.print(". Bericht: ");
+
+  // Toon het ontvangen bericht
   for (int i = 0; i < length; i++) {
     Serial.print((char)message[i]);
   }
   Serial.println();
-<<<<<<< HEAD
 
-=======
-  /*DynamicJsonDocument doc(1024);
-  deserializeJson(doc, message);
-    r = doc["r"];
-    g = doc["g"];
-    b = doc["b"];
-    w = doc["w"];
-    */
->>>>>>> db4a30fa31592e55e7ccc16d2d71a9d9116053a6
-    char* ptr = strtok((char*)message, ",");  // delimiter
-    char *colors[3]; // an array of pointers to the pieces of the above array after strtok()
-    byte index = 0;
-     while (ptr != NULL)
-     {
-        colors[index] = ptr;
-        index++;
-        ptr = strtok(NULL, ",");
-     }
-     r = atoi(colors[0]);
-     g = atoi(colors[1]);
-     b = atoi(colors[2]);
-    Serial.println(r);
-    Serial.println(g);
-    Serial.println(b);
+  // Parse het ontvangen bericht om kleurwaarden te verkrijgen
+  char* ptr = strtok((char*)message, ",");  // Delimiter
+  char *colors[3]; // Een array van pointers naar de delen van het bovenstaande array na strtok()
+  byte index = 0;
 
-    EEPROM.write(0, r);
-    EEPROM.write(1, g);
-    EEPROM.write(2,b);
-    EEPROM.write(3, w);
-    EEPROM.commit();
-    setColor(r,g,b,w);
-    
-          sk6812.show();   
-          // update to the sk6812 Led Strip
+  // Splits het bericht op in RGB-kleurwaarden
+  while (ptr != NULL) {
+    colors[index] = ptr;
+    index++;
+    ptr = strtok(NULL, ",");
   }
+
+  // Converteer de kleurwaarden naar integer
+  r = atoi(colors[0]);
+  g = atoi(colors[1]);
+  b = atoi(colors[2]);
+
+  // Schrijf kleurwaarden naar EEPROM
+  EEPROM.write(0, r);
+  EEPROM.write(1, g);
+  EEPROM.write(2, b);
+  EEPROM.write(3, w);
+  EEPROM.commit();
+
+  // Stel de LED-kleur in
+  setColor(r, g, b, w);
+  sk6812.show(); // Toon de nieuwe kleuren op de LED-strip
+}
+
+// MQTT-herverbinding
 void reconnect() {
-  // Loop until we're reconnected
+  // Blijf proberen totdat we opnieuw verbonden zijn
   while (!client.connected()) {
-    Serial.print("Attempting MQTT connection...");
-    // Attempt to connect
-    Serial.print("Connecting: ");
+    Serial.print("Poging tot MQTT-verbinding...");
+    Serial.print("Verbinding maken: ");
     Serial.print(WiFi.macAddress().c_str());
     Serial.print(" : ");
     Serial.print(Config::MQTT_PASS);
+
+    // Probeer opnieuw verbinding te maken met MQTT-broker
     if (client.connect(WiFi.macAddress().c_str(), WiFi.macAddress().c_str(), Config::MQTT_PASS)) {
-      Serial.println(" connected");
-      // Subscribe
-      client.subscribe((topic + '/' + WiFi.macAddress() + "/rgb").c_str());
+      Serial.println(" verbonden");
+      // Abonneer op het juiste onderwerp
+      client.subscribe((topic + '/' + convertMac() + "/rgb").c_str());
       sendAlive();
     } else {
-      Serial.print("failed, rc=");
+      Serial.print("Mislukt, rc=");
       Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
-      // Wait 5 seconds before retrying
-      delay(5000);
+      Serial.println(" probeer opnieuw over 5 seconden");
+      delay(5000); // Wacht 5 seconden voordat u opnieuw probeert
     }
   }
 }
-void setColor(int r, int g, int b , int w){
-    for(int pixel = 0; pixel < NUM_PIXELS ; pixel++){
-      sk6812.setPixelColor(pixel, sk6812.Color(r,g,b,w));  // it only takes effect if pixels.show() is called
+
+// Stel de LED-kleur in
+void setColor(int r, int g, int b, int w) {
+  for (int pixel = 0; pixel < NUM_PIXELS; pixel++) {
+    sk6812.setPixelColor(pixel, sk6812.Color(r, g, b, 0));
   }
 }
 
-void sendAlive(){
-        client.publish((topic + "/alive").c_str() , WiFi.macAddress().c_str());
+// Stuur "alive" bericht naar MQTT-broker
+void sendAlive() {
+  client.publish((topic + "/alive").c_str(), WiFi.macAddress().c_str());
+}
+
+// Hulpmethode om MAC-adres te converteren naar een leesbaar formaat
+String convertMac() {
+  String macAddress = WiFi.macAddress();
+  String cleanedMac = "";
+
+  // Loop door elk teken van het MAC-adres
+  for (int i = 0; i < macAddress.length(); i++) {
+    char c = macAddress.charAt(i);
+
+    // Voeg tekens toe aan de schoongemaakte string als ze geen ":" zijn
+    if (c != ':') {
+      cleanedMac += c;
+    }
+  }
+
+  return cleanedMac;
 }
