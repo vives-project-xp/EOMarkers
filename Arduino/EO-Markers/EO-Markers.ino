@@ -4,7 +4,7 @@
 #include <EEPROM.h>
 #include "config.h"
 #include <RGBWConverter.h>
-#include "EOWifi.h"
+#define WIFI_TIMEOUT_MS 20000
 
 // Namespace voor configuratievariabelen
 using namespace EOMarker;
@@ -19,7 +19,7 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 String topic = Config::MQTT_BASE_TOPIC;
 
-RGBWConverter converter(240, 215, 200, true);
+RGBWConverter converter(250, 250, 250, true);
 // Pin voor sensorinput en kleurvariabelen
 int sensorpin = 1;
 int r = 0;
@@ -53,53 +53,37 @@ void setup() {
   Serial.println("Groen: " + String(g));
   Serial.println("Blauw: " + String(b));
 
-  // WiFi- en MQTT-configuratie
+  xTaskCreate(
+    &checkSensor,  //function name
+    "Keep Wifi Alive", //task name
+    10240, //stack size increase above 1000 for connect to wifi
+    NULL, //task parameters
+    1, //priority
+    NULL //task handle
+  ); 
+
+    // WiFi- en MQTT-configuratie
   setup_wifi();
   client.setServer(Config::MQTT_BROKER, Config::MQTT_PORT);
   client.setCallback(callback);
 }
 
 void loop() {
-  if (!client.connected()) {
-    reconnect();
-  }
   client.loop();
-
-  // Lees de sensorwaarde
-  int val = digitalRead(sensorpin);
-
-  // Vergelijk huidige sensorwaarde met vorige waarde
-  if (val != prevVal) {
-    prevVal = val;
-    if (val == 1) {
-      // Zet LED-kleur en stuur "alive" bericht als sensor is geactiveerd
-      setColor(r, g, b, w);
-      sendAlive();
-    } else {
-      // Zet LED-kleur uit als sensor niet is geactiveerd
-      setColor(0, 0, 0, 0);
-    }
-  }
-
-  // Toon de LED-kleuren op de sk6812 LED-strip
-  sk6812.show();
 }
 
 // WiFi-configuratie
-void setup_wifi() {
-  delay(10);
-  Serial.println();
-  Serial.print("Verbinden met ");
-  Serial.println(Config::WIFI_SSID);
-  WiFi.begin(Config::WIFI_SSID, Config::WIFI_PASS);
-  if(WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.println("WiFi verbonden");
-  Serial.println("IP-adres: ");
-  Serial.println(WiFi.localIP());
+void setup_wifi() { 
+  //Wifi setup
+  xTaskCreatePinnedToCore(
+    keepWifiAlive,  //function name
+    "Keep Wifi Alive", //task name
+    5000, //stack size increase above 1000 for connect to wifi
+    NULL, //task parameters
+    2, //priority
+    NULL, //task handle
+    CONFIG_ARDUINO_RUNNING_CORE //CPU Core 
+  );
 }
 
 // MQTT-berichtverwerking
@@ -218,3 +202,63 @@ String convertMac() {
 
   return cleanedMac;
 }
+
+
+//------------------------------------WIFI KEEP ALIVE CODE--------------------------------------------------------
+void keepWifiAlive(void * parameters){ 
+  for(;;){
+    //if connected do nothing and quit
+    if(WiFi.status() == WL_CONNECTED){
+      Serial.print("WiFi still connected: "); Serial.println(WiFi.localIP().toString().c_str());
+      vTaskDelay(10000 / portTICK_PERIOD_MS);
+      continue;
+    }
+    //initiate connection
+    Serial.println("Wifi Connecting");
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(Config::WIFI_SSID, Config::WIFI_PASS);
+    unsigned long startAttemptTime = millis();
+
+    //Indicate to the user that we are not currently connected but are trying to connect.
+    while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < WIFI_TIMEOUT_MS){
+      Serial.print(".");
+      vTaskDelay(500 / portTICK_PERIOD_MS);
+      vTaskDelay(500 / portTICK_PERIOD_MS);
+      continue;
+    }
+    //Indicate to the user the outcome of our attempt to connect.
+    if(WiFi.status() == WL_CONNECTED){
+      Serial.print("[WIFI] Connected: "); Serial.println(WiFi.localIP().toString().c_str());
+      reconnect();
+    } else {
+      Serial.println("[WIFI] Failed to Connect before timeout");
+    }
+  }
+}  
+//---------------------------------END OF WIFI KEEP ALIVE CODE--------------------------------------------------------
+
+//---------------------------------CHECK SENSOR INPUT-----------------------------------------------------------------
+
+void checkSensor(void * parameters){
+    for(;;){
+  // Lees de sensorwaarde
+  int val = digitalRead(sensorpin);
+
+  // Vergelijk huidige sensorwaarde met vorige waarde
+  if (val != prevVal) {
+    prevVal = val;
+    if (val == 1) {
+      // Zet LED-kleur en stuur "alive" bericht als sensor is geactiveerd
+      setColor(r, g, b, w);
+      sendAlive();
+    } else {
+      // Zet LED-kleur uit als sensor niet is geactiveerd
+      setColor(0, 0, 0, 0);
+    }
+  }
+  // Toon de LED-kleuren op de sk6812 LED-strip
+  sk6812.show();
+    }
+}
+
+//---------------------------------END CHECK SENSOR INPUT-------------------------------------------------------------
