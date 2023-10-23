@@ -1,8 +1,10 @@
 #include <Adafruit_NeoPixel.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
-#include <EEPROM>
+#include <EEPROM.h>
 #include "config.h"
+#include <RGBWConverter.h>
+#include "EOWifi.h"
 
 // Namespace voor configuratievariabelen
 using namespace EOMarker;
@@ -17,11 +19,7 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 String topic = Config::MQTT_BASE_TOPIC;
 
-// RGB-pin en kanaal voor sensorinvoer
-#define RGB_COUNT 1
-#define RGB_PIN 8
-#define RGB_CHANNEL 0
-
+RGBWConverter converter(240, 215, 200, true);
 // Pin voor sensorinput en kleurvariabelen
 int sensorpin = 1;
 int r = 0;
@@ -44,6 +42,11 @@ void setup() {
   g = EEPROM.read(1);
   b = EEPROM.read(2);
   w = EEPROM.read(3);
+  if(r == 0 && g == 0 && b == 0){
+    r = 255;
+    g = 255;
+    b = 255;
+  }
 
   Serial.println("Lezen van EEPROM:");
   Serial.println("Rood: " + String(r));
@@ -89,7 +92,7 @@ void setup_wifi() {
   Serial.print("Verbinden met ");
   Serial.println(Config::WIFI_SSID);
   WiFi.begin(Config::WIFI_SSID, Config::WIFI_PASS);
-  while (WiFi.status() != WL_CONNECTED) {
+  if(WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
@@ -110,10 +113,18 @@ void callback(char* topic, byte* message, unsigned int length) {
     Serial.print((char)message[i]);
   }
   Serial.println();
-
+  
+  char copy[256];  // Maak een kopie van het bericht om strtok veilig te gebruiken
+  strncpy(copy, (char*)message, length);
+  copy[length] = '\0';  // Zorg ervoor dat de kopie een null-terminator heeft
+  
   // Parse het ontvangen bericht om kleurwaarden te verkrijgen
-  char* ptr = strtok((char*)message, ",");  // Delimiter
+  char* ptr = strtok(copy, ",");
   char *colors[3]; // Een array van pointers naar de delen van het bovenstaande array na strtok()
+  colors[0] = 0;
+  colors[1] = 0;
+  colors[2] = 0;
+
   byte index = 0;
 
   // Splits het bericht op in RGB-kleurwaarden
@@ -128,6 +139,18 @@ void callback(char* topic, byte* message, unsigned int length) {
   g = atoi(colors[1]);
   b = atoi(colors[2]);
 
+  //rgb to rgbw
+  auto c = converter.RGBToRGBW(r, g, b);
+  r = c.r;
+  g = c.g;
+  b = c.b;
+  w = c.w;
+
+  Serial.println(r);
+  Serial.println(g);
+  Serial.println(b);
+  Serial.println(w);
+
   // Schrijf kleurwaarden naar EEPROM
   EEPROM.write(0, r);
   EEPROM.write(1, g);
@@ -139,6 +162,7 @@ void callback(char* topic, byte* message, unsigned int length) {
   setColor(r, g, b, w);
   sk6812.show(); // Toon de nieuwe kleuren op de LED-strip
 }
+
 
 // MQTT-herverbinding
 void reconnect() {
@@ -168,7 +192,7 @@ void reconnect() {
 // Stel de LED-kleur in
 void setColor(int r, int g, int b, int w) {
   for (int pixel = 0; pixel < NUM_PIXELS; pixel++) {
-    sk6812.setPixelColor(pixel, sk6812.Color(r, g, b, 0));
+    sk6812.setPixelColor(pixel, sk6812.Color(r, g, b, w));
   }
 }
 
