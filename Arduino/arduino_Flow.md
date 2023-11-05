@@ -1,3 +1,6 @@
+# code flow
+
+```
 +----------------------------------------+
 |  Global Variable Declarations  
 |    Include Libraries     
@@ -74,3 +77,4 @@
 |   Continuous Sensor Monitoring   
 |   Update LED and Publish         
 +----------------------------------------+
+```
