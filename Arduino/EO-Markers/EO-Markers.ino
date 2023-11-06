@@ -243,7 +243,6 @@ void checkSensor(void * parameters){
     for(;;){
   // Lees de sensorwaarde
   int val = digitalRead(sensorpin);
-  Serial.println(val);
   // Vergelijk huidige sensorwaarde met vorige waarde
   if (val != prevVal) {
     prevVal = val;

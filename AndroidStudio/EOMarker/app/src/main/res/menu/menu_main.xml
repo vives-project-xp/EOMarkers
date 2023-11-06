@@ -4,4 +4,12 @@
     <item
         android:id="@+id/menu_settings"
         android:title="Settings"/>
+    <item
+        android:id="@+id/menu_reload"
+        android:title="Reload"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_reload"></item>
+    <item
+        android:id="@+id/manu_devices"
+        android:title="devices"></item>
 </menu>
