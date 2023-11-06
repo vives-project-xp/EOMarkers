@@ -3,13 +3,17 @@ package com.eomarker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.skydoves.colorpickerview.ColorEnvelope;
 import com.skydoves.colorpickerview.ColorPickerView;
@@ -22,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private static String CLIENT_ID = "";
     private static String CLIENT_PASS = "";
     private MqttHandler mqttHandler;
+    
+
+
     EditText red;
     EditText green;
     EditText blue;
@@ -31,18 +38,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BROKER_URL = getResources().getString(R.string.MQTT_BROKER);
-        CLIENT_ID = getResources().getString(R.string.MQTT_USER);
-        CLIENT_PASS = getResources().getString(R.string.MQTT_PASS);
-
         mqttHandler = new MqttHandler();
-        mqttHandler.connect(BROKER_URL,CLIENT_ID, CLIENT_PASS);
-        Toast.makeText(this, BROKER_URL, Toast.LENGTH_SHORT).show();
-         red = findViewById(R.id.colorRed);
-         green = findViewById(R.id.colorGreen);
-         blue = findViewById(R.id.colorBlue);
-         white = findViewById(R.id.colorWhite);
-         macAddress = findViewById(R.id.MacAddress);
+
+        BROKER_URL = "tcp://" + KeyValueStorage.loadData(getApplicationContext(), "BROKER_URL", getResources().getString(R.string.MQTT_BROKER));
+        CLIENT_ID = KeyValueStorage.loadData(getApplicationContext(), "BROKER_USERNAME", getResources().getString(R.string.MQTT_BROKER));
+        CLIENT_PASS = KeyValueStorage.loadData(getApplicationContext(), "BROKER_PASSWORD", getResources().getString(R.string.MQTT_BROKER));
+
+        ConnectMQTT();
+        macAddress = findViewById(R.id.MacAddress);
         ColorPickerView colorPickerView = findViewById(R.id.colorPickerView);
         colorPickerView.setColorListener(new ColorEnvelopeListener() {
             @Override
@@ -50,14 +53,6 @@ public class MainActivity extends AppCompatActivity {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                     updateColor(String.valueOf(Color.red(color.getColor())),String.valueOf(Color.green(color.getColor())),String.valueOf(Color.blue(color.getColor())), "0");
                 }
-            }
-        });
-
-        Button btnPublish = findViewById(R.id.btnPublish);
-        btnPublish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateColor( red.getText().toString(), green.getText().toString(), blue.getText().toString(), white.getText().toString());
             }
         });
     }
@@ -70,27 +65,51 @@ public class MainActivity extends AppCompatActivity {
     }
     private void publishMessage(String topic, String message){
         if(mqttHandler.connected()) {
-            Toast.makeText(this, "Publishing message: " + message, Toast.LENGTH_SHORT).show();
             mqttHandler.publish(topic, message);
         }
     }
     private void subscribeToTopic(String topic){
-        Toast.makeText(this, "Subscribing to topic "+ topic, Toast.LENGTH_SHORT).show();
         mqttHandler.subscribe(topic);
     }
 
     private void updateColor(String red, String green, String blue, String white){
-        TextView tv = findViewById(R.id.textView);
         mqttHandler.connect(BROKER_URL,CLIENT_ID, CLIENT_PASS);
 
-        if(mqttHandler.connected()){
-            tv.setText("connected");
-        }else{
-            tv.setText("disconnected");
+        try{
+            if(mqttHandler.connected()) {
+                getSupportActionBar().setTitle("EOMarker (connected)");
+            }else{
+                getSupportActionBar().setTitle("EOMarker (disconnected)");
+            }}catch (Exception e){
 
         }
         String color = red + "," + green + "," + blue;
         String mac = macAddress.getText().toString().replace(":","");
         publishMessage("PM/EOMarkers/" + mac  + "/rgb", color);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if(id == R.id.menu_settings){
+            Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(settingsIntent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void ConnectMQTT(){
+        try {
+            mqttHandler.connect(BROKER_URL, CLIENT_ID, CLIENT_PASS);
+        }catch (Exception e){
+            Log.e("MQTT", e.toString());
+        }
     }
 }

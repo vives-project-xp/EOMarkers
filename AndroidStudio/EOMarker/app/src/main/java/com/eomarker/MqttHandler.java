@@ -1,5 +1,7 @@
 package com.eomarker;
 
+import android.util.Log;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -8,9 +10,13 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MqttHandler {
 
-    private MqttClient client;
+    private MqttClient client = null;
+    public boolean isConnected = false;
 
     public void connect(String brokerUrl, String clientId, String clientPass) {
+        if(brokerUrl == null || brokerUrl.isEmpty()){
+            return;
+        }
         try {
             // Initialize the MQTT client
             client = new MqttClient(brokerUrl, clientId, new MemoryPersistence());
@@ -23,20 +29,27 @@ public class MqttHandler {
 
             // Connect to the broker
             client.connect(connectOptions);
-        } catch (MqttException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public boolean connected(){
-        return client.isConnected();
+        try{
+            isConnected = client.isConnected();
+        }catch (Exception e){
+
+        }
+        return isConnected;
     }
 
     public void disconnect() {
-        try {
-            client.disconnect();
-        } catch (MqttException e) {
-            e.printStackTrace();
+        if(isConnected) {
+            try {
+                client.disconnect();
+            } catch (MqttException e) {
+                e.printStackTrace();
+            }
         }
     }
 

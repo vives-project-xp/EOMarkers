@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">EOMarker</string>
-    <string name="MQTT_BROKER">tcp://projectmaster.devbit.be</string>
+    <string name="MQTT_BROKER">projectmaster.devbit.be</string>
     <string name="MQTT_USER">EOMarker</string>
     <string name="MQTT_PASS">EOMarker</string>
 </resources>
