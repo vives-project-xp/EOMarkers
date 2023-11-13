@@ -2,31 +2,21 @@ package com.eomarker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.skydoves.colorpickerview.ColorEnvelope;
 import com.skydoves.colorpickerview.ColorPickerView;
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
-import com.skydoves.colorpickerview.listeners.ColorListener;
 
-import org.eclipse.paho.client.mqttv3.IMqttActionListener;
-import org.eclipse.paho.client.mqttv3.IMqttToken;
-import org.eclipse.paho.client.mqttv3.MqttException;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mqttHandler = new MqttHandler();
 
         BROKER_URL = "tcp://" + KeyValueStorage.loadData(getApplicationContext(), "BROKER_URL", getResources().getString(R.string.MQTT_BROKER));
@@ -69,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadDevices() {
         Spinner spinnerDevices = findViewById(R.id.spinner_devices);
-        MacAddressStorage macAddressStorage = new MacAddressStorage(this);
-        List<String> devices = macAddressStorage.getMacAddresses(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, devices);
+        InternalStorage internalStorage = new InternalStorage(this);
+        List<Device> devices = internalStorage.getDevices();
+        ArrayAdapter<Device> adapter = new ArrayAdapter<Device>(this, android.R.layout.simple_spinner_dropdown_item, devices);
         spinnerDevices.setAdapter(adapter);
     }
 
@@ -121,8 +112,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(settingsIntent);
         }
         if(id == R.id.menu_reload){
+            Toast.makeText(this, "Reloading...", Toast.LENGTH_SHORT).show();
             ConnectMQTT();
             loadDevices();
+        }
+        if(id == R.id.menu_devices){
+            Intent devicesIntent = new Intent(MainActivity.this, DevicesActivity.class);
+            startActivity(devicesIntent);
         }
         return super.onOptionsItemSelected(item);
     }

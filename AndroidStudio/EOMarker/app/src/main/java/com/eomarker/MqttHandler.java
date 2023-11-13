@@ -2,7 +2,6 @@ package com.eomarker;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -13,6 +12,7 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -48,12 +48,16 @@ public class MqttHandler {
                 @Override
                 public void messageArrived(String topic, MqttMessage message) throws Exception {
                     Log.i("MQTT", "topic: " + topic + ", msg: " + new String(message.getPayload()));
-                    MacAddressStorage macAddressStorage = new MacAddressStorage(context);
-                    List<String> macAddresses = macAddressStorage.getMacAddresses(context);
-                    if(!macAddresses.contains(new String(message.getPayload()))){
-                        Log.e("MQTT", "New device discovered: " + new String(message.getPayload()));
-                        macAddressStorage.saveMacAddress(new String(message.getPayload()));
+                    InternalStorage internalStorage = new InternalStorage(context);
+                    JSONObject json = new JSONObject(new String(message.getPayload()));
+                    Device device = new Device(json.getString("macAddress"), json.getString("name"));
+                    List<Device> devices = internalStorage.getDevices();
+                    for (Device d: devices) {
+                        if(d.macAddress == device.macAddress) return;
                     }
+                    Log.e("MQTT", "New device discovered: " + new String(message.getPayload()));
+                    internalStorage.saveDevice(device);
+
                 }
 
                 @Override

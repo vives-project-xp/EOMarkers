@@ -8,7 +8,6 @@
 
 // Namespace voor configuratievariabelen
 using namespace EOMarker;
-
 // Definieer hardware-gerelateerde constanten
 #define PIN 10            // De ESP32-pin GPIO16 verbonden met sk6812
 #define NUM_PIXELS 24    // Het aantal LED's (pixels) op de sk6812 LED-strip

@@ -10,6 +10,6 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_reload"></item>
     <item
-        android:id="@+id/manu_devices"
+        android:id="@+id/menu_devices"
         android:title="devices"></item>
 </menu>
