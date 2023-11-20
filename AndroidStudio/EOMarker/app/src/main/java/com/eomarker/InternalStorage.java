@@ -1,7 +1,7 @@
 package com.eomarker;
 
 import android.content.Context;
-import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,8 +17,10 @@ import java.util.List;
 
 public class InternalStorage {
     private File storageFile;
+    Context context;
 
-    public InternalStorage(Context context) {
+    public InternalStorage(Context _context) {
+        context = _context;
         storageFile = new File(context.getFilesDir(), "devices.json");
         if (!storageFile.exists()) {
             try {
@@ -61,6 +63,32 @@ public class InternalStorage {
         return devices;
     }
 
+    public void updateDeviceName(String macAddress, String newName) {
+        try {
+            JSONArray jsonArray = readJsonArrayFromFile();
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject deviceObject = jsonArray.getJSONObject(i);
+                String deviceMacAddress = deviceObject.getString("macAddress");
+
+                // Controleer of het macAdres overeenkomt met het gezochte apparaat
+                if (deviceMacAddress.equals(macAddress)) {
+                    // Wijzig de naam van het apparaat
+                    deviceObject.put("name", newName);
+
+                    // Sla de bijgewerkte array terug op
+                    FileOutputStream fos = new FileOutputStream(storageFile);
+                    fos.write(jsonArray.toString().getBytes());
+                    fos.close();
+                    return; // Stop de loop omdat het apparaat is gevonden en bijgewerkt
+                }
+            }
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private JSONArray readJsonArrayFromFile() {
         JSONArray jsonArray = new JSONArray();
@@ -79,4 +107,39 @@ public class InternalStorage {
         }
         return jsonArray;
     }
+
+    public void deleteData() {
+        try{
+            storageFile = new File(context.getFilesDir(), "devices.json");
+            storageFile.delete();
+            Toast.makeText(context, "Data deleted!", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(context, "Unable to delete data...", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void deleteDevice(Device device) {
+        try {
+            JSONArray jsonArray = readJsonArrayFromFile();
+            JSONArray updatedArray = new JSONArray();
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject deviceObject = jsonArray.getJSONObject(i);
+                String deviceMacAddress = deviceObject.getString("macAddress");
+
+                // Als het macAdres overeenkomt met het te verwijderen apparaat, sla het niet op in de bijgewerkte array
+                if (!deviceMacAddress.equals(device.macAddress)) {
+                    updatedArray.put(deviceObject);
+                }
+            }
+
+            // Overschrijf het opslaan van de bijgewerkte array
+            FileOutputStream fos = new FileOutputStream(storageFile);
+            fos.write(updatedArray.toString().getBytes());
+            fos.close();
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

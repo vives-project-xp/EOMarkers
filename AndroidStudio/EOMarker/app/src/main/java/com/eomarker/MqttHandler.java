@@ -2,6 +2,7 @@ package com.eomarker;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -21,9 +22,12 @@ public class MqttHandler {
     private MqttClient client = null;
     public boolean isConnected = false;
     private Context context;
+    MainActivity main;
+    private DeviceDiscoveryListener deviceDiscoveryListener;
 
-    public void connect(String brokerUrl, String clientId, String clientPass, Context _context) {
+    public void connect(String brokerUrl, String clientId, String clientPass, Context _context, MainActivity _main) {
         context = _context;
+        main = _main;
         if(brokerUrl == null || brokerUrl.isEmpty()){
             return;
         }
@@ -42,21 +46,39 @@ public class MqttHandler {
             client.setCallback(new MqttCallback() {
                 @Override
                 public void connectionLost(Throwable cause) {
-                    Log.i("MQTT", "connection lost");
+                    Log.i("MQTT", "connection lost, reconnecting... " + cause);
+                    main.ConnectMQTT();
                 }
 
                 @Override
                 public void messageArrived(String topic, MqttMessage message) throws Exception {
-                    Log.i("MQTT", "topic: " + topic + ", msg: " + new String(message.getPayload()));
                     InternalStorage internalStorage = new InternalStorage(context);
                     JSONObject json = new JSONObject(new String(message.getPayload()));
                     Device device = new Device(json.getString("macAddress"), json.getString("name"));
                     List<Device> devices = internalStorage.getDevices();
+                    boolean newDevice = true;
                     for (Device d: devices) {
-                        if(d.macAddress == device.macAddress) return;
+                        if(d.macAddress.equals(device.macAddress)){
+                            if(d.name.equals(device.name)) {
+                                newDevice = false;
+                            }else{
+                                internalStorage.updateDeviceName(device.macAddress, d.name);
+                            }
+                        }
                     }
-                    Log.e("MQTT", "New device discovered: " + new String(message.getPayload()));
-                    internalStorage.saveDevice(device);
+                    if(newDevice) {
+                        try {
+                            internalStorage.saveDevice(device);
+                            main.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    Toast.makeText(context, "New device discovered!", Toast.LENGTH_SHORT).show();
+                                    onNewDeviceDiscovered();
+                                }
+                            });
+                        }catch (Exception e){}
+                    }
 
                 }
 
@@ -65,16 +87,24 @@ public class MqttHandler {
                     Log.i("MQTT", "msg delivered");
                 }
             });
-            Log.e("mqtt", "Connected");
             subscribeToTopic();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public void setDeviceDiscoveryListener(DeviceDiscoveryListener listener) {
+        this.deviceDiscoveryListener = listener;
+    }
+
+    private void onNewDeviceDiscovered() {
+        if (deviceDiscoveryListener != null) {
+            deviceDiscoveryListener.onDeviceDiscovered();
+        }
+    }
+
     public void subscribeToTopic() {
         String topic = "PM/EOMarkers/alive";
-        Log.e("mqqt", "subscribing");
         subscribe(topic, 0, null, new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
@@ -110,16 +140,21 @@ public class MqttHandler {
 
     public void publish(String topic, String message) {
         try {
-            MqttMessage mqttMessage = new MqttMessage(message.getBytes());
-            client.publish(topic, mqttMessage);
+            if (client != null && client.isConnected()) {
+                MqttMessage mqttMessage = new MqttMessage(message.getBytes());
+                client.publish(topic, mqttMessage);
+            } else {
+                Log.e("MQTT", "Client not connected or null");
+            }
         } catch (MqttException e) {
             e.printStackTrace();
         }
     }
 
+
     public void subscribe(String topic, int i, Object o, IMqttActionListener iMqttActionListener) {
         if(client.isConnected()){
-            Log.e("mqtt", "conencted, starting sub");
+            Log.e("mqtt", "connected, starting sub");
         }else{
             Log.e("MQTT", "Not connected");
         }

@@ -77,6 +77,15 @@
             android:textSize="20dp"
             android:inputType="textPassword" ></EditText>
 
+        <Button
+            android:id="@+id/btn_removeData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userPassword"
+            android:layout_marginHorizontal="80dp"
+            android:layout_marginTop="50dp"
+            android:text="Remove Data"></Button>
+
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

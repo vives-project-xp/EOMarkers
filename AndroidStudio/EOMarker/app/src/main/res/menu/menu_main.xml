@@ -11,5 +11,5 @@
         android:icon="@drawable/ic_reload"></item>
     <item
         android:id="@+id/menu_devices"
-        android:title="devices"></item>
+        android:title="Devices"></item>
 </menu>
