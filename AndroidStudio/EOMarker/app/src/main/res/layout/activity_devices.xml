@@ -7,9 +7,30 @@
     android:id="@+id/pullToRefresh"
     tools:context=".DevicesActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="30dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="Visualize all devices"></TextView>
+
+        <ImageButton
+            android:id="@+id/btn_visualizeAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_view"></ImageButton>
+
     <ListView
         android:id="@+id/listview_devices"
         android:layout_width="match_parent"
+        android:layout_marginTop="70dp"
         android:layout_height="match_parent"></ListView>
+    </RelativeLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -6,14 +6,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
 
 public class DevicesActivity extends AppCompatActivity implements DeviceDiscoveryListener {
-
+    private List<Device> devices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +38,28 @@ public class DevicesActivity extends AppCompatActivity implements DeviceDiscover
             }
         });
         loadDevices();
+        ImageButton visualizeAll = findViewById(R.id.btn_visualizeAll);
+        visualizeAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadDevices();
+                Toast.makeText(getApplicationContext(), "Visualizing all devices!", Toast.LENGTH_SHORT).show();
+                for (Device device: devices) {
+                try {
+                    MqttHandler mqttHandler = MainActivity.getMqttHandler();
+                    mqttHandler.publish("PM/EOMarkers/" + device.macAddress.replace(":", "") + "/visualize", "true");
+                }catch (Exception e){}
+            }
 
+            }
+        });
     }
 
     private void loadDevices(
     ) {
         // Create an ArrayList of device objects
         InternalStorage internalStorage = new InternalStorage(this);
-        List<Device> devices = internalStorage.getDevices();
-        Log.e("devices", devices.size() + "");
+        devices = internalStorage.getDevices();
         DeviceAdapter deviceAdapter = new DeviceAdapter(this, devices);
 
         ListView listView = findViewById(R.id.listview_devices);

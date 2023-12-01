@@ -20,6 +20,7 @@ PubSubClient client(espClient);
 String topic = Config::MQTT_BASE_TOPIC;
 String friendlyName = "";
 
+
 RGBWConverter converter(250, 250, 250, true);
 // Pin voor sensorinput en kleurvariabelen
 int sensorpin = 1; //                                                                                                            ################ ESP-C3 V1
@@ -263,9 +264,33 @@ void keepWifiAlive(void * parameters){
       continue;
     }
     //initiate connection
+
+       StaticJsonDocument<1024> jsonLogins;
+    DeserializationError error = deserializeJson(jsonLogins, Config::LOGINS);
+    
+    if (error) {
+      Serial.print("Fout tijdens het analyseren van JSON: ");
+      Serial.println(error.c_str());
+      return;
+    }
+    
     Serial.println("Wifi Connecting");
+    Serial.println(Config::WIFI_SSID);
+    Serial.println(String(WiFi.macAddress()));
+
+    // Controleer of de sleutel bestaat voordat je de waarde probeert af te drukken
+    if (jsonLogins.containsKey(String(WiFi.macAddress()))) {
+      Serial.print("Value for ");
+      Serial.print(WiFi.macAddress());
+      Serial.print(": ");
+      Serial.println(jsonLogins[String(WiFi.macAddress())].as<const char*>());
+    } else {
+      Serial.println("Key not found in JSON document");
+      return;
+    }
+
     WiFi.mode(WIFI_STA);
-    WiFi.begin(Config::WIFI_SSID, Config::WIFI_PASS);
+    WiFi.begin(Config::WIFI_SSID, jsonLogins[String(WiFi.macAddress())].as<const char*>());
     unsigned long startAttemptTime = millis();
 
     //Indicate to the user that we are not currently connected but are trying to connect.
