@@ -1,4 +1,4 @@
-package com.eomarker;
+package com.eomarker.device;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,13 +16,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.eomarker.R;
+import com.eomarker.activity.MainActivity;
+import com.eomarker.mqtt.MqttHandler;
+import com.eomarker.storage.InternalStorage;
+
 import java.util.List;
 
 public class DeviceAdapter extends ArrayAdapter<Device>{
     private final LayoutInflater inflater;
     private final List<Device> devices;
     private Context context;
-    private  InternalStorage internalStorage;
+    private InternalStorage internalStorage;
 
     public DeviceAdapter(Context context, List<Device> devices) {
         super(context, R.layout.device_item, devices);

@@ -1,8 +1,4 @@
-package com.eomarker;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+package com.eomarker.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,7 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.eomarker.R;
+import com.eomarker.storage.InternalStorage;
+import com.eomarker.storage.KeyValueStorage;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -38,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
         userName.setText(KeyValueStorage.loadData(getApplicationContext(), "BROKER_USERNAME", ""));
         userPassword.setText(KeyValueStorage.loadData(getApplicationContext(), "BROKER_PASSWORD", ""));
 
-        Button removeData = findViewById(R.id.btn_removeData);
+        ImageButton removeData = findViewById(R.id.btn_removeData);
         removeData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,18 +57,30 @@ public class SettingsActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 InternalStorage internalStorage = new InternalStorage(context);
                                 internalStorage.deleteData();
+
+                                brokerURL.setText("");
+                                userName.setText( "");
+                                userPassword.setText("");
                             }
                         }).show();
 
             }
         });
+        Button SaveData = findViewById(R.id.btn_saveData);
+        SaveData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveSettings();
+                onPause();
+            }
+        });
     }
-
 
     @Override
     protected void onPause() {
         saveSettings();
         super.onPause();
+        finish();
     }
 
     private void saveSettings(){

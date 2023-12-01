@@ -1,8 +1,13 @@
-package com.eomarker;
+package com.eomarker.mqtt;
 
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.eomarker.activity.MainActivity;
+import com.eomarker.device.Device;
+import com.eomarker.device.DeviceDiscoveryListener;
+import com.eomarker.storage.InternalStorage;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -47,7 +52,7 @@ public class MqttHandler {
                 @Override
                 public void connectionLost(Throwable cause) {
                     Log.i("MQTT", "connection lost, reconnecting... " + cause);
-                    main.ConnectMQTT();
+                    //main.ConnectMQTT();
                 }
 
                 @Override
@@ -166,6 +171,5 @@ public class MqttHandler {
             e.printStackTrace();
         }
     }
-
 
 }

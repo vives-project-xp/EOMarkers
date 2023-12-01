@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity">
+    tools:context=".activity.SettingsActivity">
 
     <RelativeLayout
         android:layout_width="300dp"
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:gravity="center"
-            android:text="Broker URL: " />
+            android:text="@string/broker_url" />
 
         <EditText
             android:id="@+id/brokerURL"
@@ -31,8 +31,9 @@
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
             android:gravity="left"
-            android:textSize="20dp"
-            android:inputType="textFilter" ></EditText>
+            android:textSize="20sp"
+            android:inputType="textFilter"
+            />
 
         <TextView
             android:id="@+id/text_userName"
@@ -41,7 +42,7 @@
             android:layout_below="@+id/brokerURL"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="Username: " />
+            android:text="@string/username" />
 
         <EditText
             android:id="@+id/userName"
@@ -52,8 +53,8 @@
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
             android:gravity="left"
-            android:textSize="20dp"
-            android:inputType="textFilter" ></EditText>
+            android:textSize="20sp"
+            android:inputType="textFilter"/>
 
         <TextView
             android:id="@+id/text_userPassword"
@@ -62,7 +63,7 @@
             android:layout_below="@+id/userName"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="Password: " />
+            android:text="@string/password" />
 
         <EditText
 
@@ -74,17 +75,33 @@
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
             android:gravity="left"
-            android:textSize="20dp"
-            android:inputType="textPassword" ></EditText>
+            android:textSize="20sp"
+            android:inputType="textPassword"/>
 
         <Button
-            android:id="@+id/btn_removeData"
-            android:layout_width="match_parent"
+            android:id="@+id/btn_saveData"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/userPassword"
-            android:layout_marginHorizontal="80dp"
             android:layout_marginTop="50dp"
-            android:text="Remove Data"></Button>
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/Save_data"/>
+
+        <ImageButton
+            android:id="@+id/btn_removeData"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userPassword"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_toEndOf="@+id/btn_saveData"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_delete"
+            android:visibility="visible"
+            tools:visibility="visible" />
 
     </RelativeLayout>
 

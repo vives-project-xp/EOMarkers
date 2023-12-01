@@ -1,7 +1,9 @@
-package com.eomarker;
+package com.eomarker.storage;
 
 import android.content.Context;
 import android.widget.Toast;
+
+import com.eomarker.device.Device;
 
 import org.json.JSONArray;
 import org.json.JSONException;

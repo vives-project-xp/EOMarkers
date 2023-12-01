@@ -1,16 +1,21 @@
-package com.eomarker;
+package com.eomarker.activity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.Toast;
+import com.eomarker.R;
+import com.eomarker.device.Device;
+import com.eomarker.device.DeviceAdapter;
+import com.eomarker.device.DeviceDiscoveryListener;
+import com.eomarker.mqtt.MqttHandler;
+import com.eomarker.storage.InternalStorage;
 
 import java.util.List;
 
@@ -25,6 +30,7 @@ public class DevicesActivity extends AppCompatActivity implements DeviceDiscover
         ActionBar actionBar = getSupportActionBar();
 
         // showing the back button in action bar
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         MqttHandler mqttHandler = MainActivity.getMqttHandler();

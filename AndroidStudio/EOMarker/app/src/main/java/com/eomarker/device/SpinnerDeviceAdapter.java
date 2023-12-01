@@ -1,4 +1,4 @@
-package com.eomarker;
+package com.eomarker.device;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,11 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+import com.eomarker.R;
+import com.eomarker.storage.InternalStorage;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class SpinnerDeviceAdapter extends ArrayAdapter<Device> {
     private final LayoutInflater inflater;
     private final List<Device> devices;
     private Context context;
-    private  InternalStorage internalStorage;
+    private InternalStorage internalStorage;
 
     public SpinnerDeviceAdapter(Activity context, int resouceId, int textviewId, List<Device> devices){
         super(context,resouceId,textviewId, devices);
