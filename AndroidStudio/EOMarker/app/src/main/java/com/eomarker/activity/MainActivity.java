@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements DeviceDiscoveryLi
     private boolean firstStart = true;
 
     String macAddress = "";
+    private List<Device> devices;
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements DeviceDiscoveryLi
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mqttHandler = new MqttHandler();
         mqttHandler.setDeviceDiscoveryListener(this);
+
 
         initializeBrokerInfo();
         ConnectMQTT();
@@ -84,7 +88,12 @@ public class MainActivity extends AppCompatActivity implements DeviceDiscoveryLi
             @Override
             public void onColorSelected(ColorEnvelope color, boolean fromUser) {
                 if (!firstStart) {
-                    handleColorSelection(color);
+                    CheckBox ColorAll = findViewById(R.id.CBColorAll);
+                    if(ColorAll.isChecked()){
+                        handleColorSelectionAll(color);
+                    }else {
+                        handleColorSelection(color);
+                    }
                 }
                 firstStart = false;
             }
@@ -113,10 +122,20 @@ public class MainActivity extends AppCompatActivity implements DeviceDiscoveryLi
         }
     }
 
+    private void handleColorSelectionAll(ColorEnvelope color) {
+        loadDevices();
+        for(Device device : devices){
+            macAddress = device.macAddress;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                updateColor(String.valueOf(Color.red(color.getColor())), String.valueOf(Color.green(color.getColor())), String.valueOf(Color.blue(color.getColor())), "0");
+            }
+        }
+    }
+
     public void loadDevices() {
         Spinner spinnerDevices = findViewById(R.id.spinner_devices);
         InternalStorage internalStorage = new InternalStorage(this);
-        List<Device> devices = internalStorage.getDevices();
+        devices = internalStorage.getDevices();
 
         SpinnerDeviceAdapter adapter = new SpinnerDeviceAdapter(this, R.layout.spinner_device_item, R.id.spinner_device_macAddress, devices);
         spinnerDevices.setAdapter(adapter);
