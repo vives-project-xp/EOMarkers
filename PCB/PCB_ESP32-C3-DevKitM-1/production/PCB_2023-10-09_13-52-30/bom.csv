@@ -1,0 +1,3 @@
+﻿Designator,Footprint,Quantity,Value,LCSC Part #
+"LED, Sensor",PinSocket_1x03_P2.54mm_Vertical,2,Conn_01x03_Socket,
+U1,XCVR_ESP32-C3-DEVKITM-1,1,ESP32-C3-DEVKITM-1,

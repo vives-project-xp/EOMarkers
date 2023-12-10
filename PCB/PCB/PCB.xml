@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>C:\Users\tibo\Desktop\EOMarkers\PCB\PCB\PCB.kicad_sch</source>
+    <date>10/12/2023 15:05:10</date>
+    <tool>Eeschema 7.0.7</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>PCB.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="J1">
+      <value>Conn_01x08_Socket</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x08_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x08_Socket" description="Generic connector, single row, 01x08, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="PCB.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x08, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9e429774-94b0-42d1-8ce3-1bfbbd819dc0</tstamps>
+    </comp>
+    <comp ref="LED1">
+      <value>Conn_01x03_Socket</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x03_Socket" description="Generic connector, single row, 01x03, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="PCB.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x03, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>08aa020b-8de1-4ec6-bb2b-1481b592d934</tstamps>
+    </comp>
+    <comp ref="Sensor1">
+      <value>Conn_01x03_Socket</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x03_Socket" description="Generic connector, single row, 01x03, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="PCB.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x03, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>22e8f7e6-7c06-4161-a386-d1d6f20bc922</tstamps>
+    </comp>
+    <comp ref="U1">
+      <value>ESP32-C3-DEVKITM-1</value>
+      <footprint>ESP32-C3-DEVKITM-1:XCVR_ESP32-C3-DEVKITM-1</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/ESP32-C3-DEVKITM-1/Espressif+Systems/view-part/?ref=eda</field>
+        <field name="Description">
+WiFi Development Tools (802.11) (ENGINEERING SAMPLE ONLY) ESP32-C3 General-Purpose Dev Board, Embeds ESP32-C3-MINI-1, 4 MB Flash, w/ Pin Header
+</field>
+        <field name="MANUFACTURER">Espressif</field>
+        <field name="MF">Espressif Systems</field>
+        <field name="MP">ESP32-C3-DEVKITM-1</field>
+        <field name="Package">None</field>
+        <field name="Price">None</field>
+        <field name="Purchase-URL">https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=5722640&amp;manufacturer=Espressif Systems&amp;part_name=ESP32-C3-DEVKITM-1&amp;search_term=None</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/ESP32-C3-DEVKITM-1/Espressif+Systems/view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="ESP32-C3-DEVKITM-1" part="ESP32-C3-DEVKITM-1" description=""/>
+      <property name="MF" value="Espressif Systems"/>
+      <property name="Description" value="&#xA;WiFi Development Tools (802.11) (ENGINEERING SAMPLE ONLY) ESP32-C3 General-Purpose Dev Board, Embeds ESP32-C3-MINI-1, 4 MB Flash, w/ Pin Header&#xA;"/>
+      <property name="Package" value="None"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/ESP32-C3-DEVKITM-1/Espressif+Systems/view-part/?ref=eda"/>
+      <property name="STANDARD" value="Manufacturer Recommendations"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/ESP32-C3-DEVKITM-1/Espressif+Systems/view-part/?ref=snap"/>
+      <property name="MP" value="ESP32-C3-DEVKITM-1"/>
+      <property name="Purchase-URL" value="https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=5722640&amp;manufacturer=Espressif Systems&amp;part_name=ESP32-C3-DEVKITM-1&amp;search_term=None"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="MANUFACTURER" value="Espressif"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="PCB.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>fc67fc43-5b46-475a-89fb-cb8395e9bfdb</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Connector" part="Conn_01x03_Socket">
+      <description>Generic connector, single row, 01x03, script generated</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x03_Socket</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x08_Socket">
+      <description>Generic connector, single row, 01x08, script generated</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x08_Socket</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="ESP32-C3-DEVKITM-1" part="ESP32-C3-DEVKITM-1">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">ESP32-C3-DEVKITM-1</field>
+        <field name="Footprint">ESP32-C3-DEVKITM-1:XCVR_ESP32-C3-DEVKITM-1</field>
+        <field name="MF">Espressif Systems</field>
+        <field name="Description">
+WiFi Development Tools (802.11) (ENGINEERING SAMPLE ONLY) ESP32-C3 General-Purpose Dev Board, Embeds ESP32-C3-MINI-1, 4 MB Flash, w/ Pin Header
+</field>
+        <field name="Package">None</field>
+        <field name="Price">None</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/ESP32-C3-DEVKITM-1/Espressif+Systems/view-part/?ref=eda</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/ESP32-C3-DEVKITM-1/Espressif+Systems/view-part/?ref=snap</field>
+        <field name="MP">ESP32-C3-DEVKITM-1</field>
+        <field name="Purchase-URL">https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=5722640&amp;manufacturer=Espressif Systems&amp;part_name=ESP32-C3-DEVKITM-1&amp;search_term=None</field>
+        <field name="Availability">In Stock</field>
+        <field name="MANUFACTURER">Espressif</field>
+      </fields>
+      <pins>
+        <pin num="1" name="GND" type="power_in"/>
+        <pin num="2" name="3V3" type="power_in"/>
+        <pin num="3" name="3V3" type="power_in"/>
+        <pin num="4" name="IO2" type="bidirectional"/>
+        <pin num="5" name="IO3" type="bidirectional"/>
+        <pin num="6" name="GND" type="power_in"/>
+        <pin num="7" name="RST" type="input"/>
+        <pin num="8" name="GND" type="power_in"/>
+        <pin num="9" name="IO0" type="bidirectional"/>
+        <pin num="10" name="IO1" type="bidirectional"/>
+        <pin num="11" name="IO10" type="bidirectional"/>
+        <pin num="12" name="GND" type="power_in"/>
+        <pin num="13" name="5V" type="power_in"/>
+        <pin num="14" name="5V" type="power_in"/>
+        <pin num="15" name="GND" type="power_in"/>
+        <pin num="16" name="GND" type="power_in"/>
+        <pin num="17" name="IO19" type="bidirectional"/>
+        <pin num="18" name="IO18" type="bidirectional"/>
+        <pin num="19" name="GND" type="power_in"/>
+        <pin num="20" name="IO4" type="bidirectional"/>
+        <pin num="21" name="IO5" type="bidirectional"/>
+        <pin num="22" name="IO6" type="bidirectional"/>
+        <pin num="23" name="IO7" type="bidirectional"/>
+        <pin num="24" name="GND" type="power_in"/>
+        <pin num="25" name="IO8" type="bidirectional"/>
+        <pin num="26" name="IO9" type="bidirectional"/>
+        <pin num="27" name="GND" type="power_in"/>
+        <pin num="28" name="RX" type="bidirectional"/>
+        <pin num="29" name="TX" type="bidirectional"/>
+        <pin num="30" name="GND" type="power_in"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Connector">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Connector.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="5V">
+      <node ref="J1" pin="8" pinfunction="Pin_8" pintype="passive"/>
+      <node ref="LED1" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="Sensor1" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="U1" pin="13" pinfunction="5V" pintype="power_in"/>
+      <node ref="U1" pin="14" pinfunction="5V" pintype="power_in"/>
+    </net>
+    <net code="2" name="GND">
+      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="LED1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="Sensor1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="U1" pin="1" pinfunction="GND" pintype="power_in"/>
+      <node ref="U1" pin="12" pinfunction="GND" pintype="power_in"/>
+      <node ref="U1" pin="15" pinfunction="GND" pintype="power_in"/>
+      <node ref="U1" pin="16" pinfunction="GND" pintype="power_in"/>
+      <node ref="U1" pin="19" pinfunction="GND" pintype="power_in"/>
+      <node ref="U1" pin="24" pinfunction="GND" pintype="power_in"/>
+      <node ref="U1" pin="27" pinfunction="GND" pintype="power_in"/>
+      <node ref="U1" pin="30" pinfunction="GND" pintype="power_in"/>
+      <node ref="U1" pin="6" pinfunction="GND" pintype="power_in"/>
+      <node ref="U1" pin="8" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="3" name="LED">
+      <node ref="LED1" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="U1" pin="11" pinfunction="IO10" pintype="bidirectional"/>
+    </net>
+    <net code="4" name="Net-(U1-3V3-Pad2)">
+      <node ref="U1" pin="2" pinfunction="3V3" pintype="power_in"/>
+      <node ref="U1" pin="3" pinfunction="3V3" pintype="power_in"/>
+    </net>
+    <net code="5" name="Sensor">
+      <node ref="Sensor1" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="U1" pin="10" pinfunction="IO1" pintype="bidirectional"/>
+    </net>
+    <net code="6" name="unconnected-(J1-Pin_2-Pad2)">
+      <node ref="J1" pin="2" pinfunction="Pin_2" pintype="passive"/>
+    </net>
+    <net code="7" name="unconnected-(J1-Pin_3-Pad3)">
+      <node ref="J1" pin="3" pinfunction="Pin_3" pintype="passive"/>
+    </net>
+    <net code="8" name="unconnected-(J1-Pin_4-Pad4)">
+      <node ref="J1" pin="4" pinfunction="Pin_4" pintype="passive"/>
+    </net>
+    <net code="9" name="unconnected-(J1-Pin_5-Pad5)">
+      <node ref="J1" pin="5" pinfunction="Pin_5" pintype="passive"/>
+    </net>
+    <net code="10" name="unconnected-(J1-Pin_6-Pad6)">
+      <node ref="J1" pin="6" pinfunction="Pin_6" pintype="passive"/>
+    </net>
+    <net code="11" name="unconnected-(J1-Pin_7-Pad7)">
+      <node ref="J1" pin="7" pinfunction="Pin_7" pintype="passive"/>
+    </net>
+    <net code="12" name="unconnected-(U1-IO0-Pad9)">
+      <node ref="U1" pin="9" pinfunction="IO0" pintype="bidirectional"/>
+    </net>
+    <net code="13" name="unconnected-(U1-IO2-Pad4)">
+      <node ref="U1" pin="4" pinfunction="IO2" pintype="bidirectional"/>
+    </net>
+    <net code="14" name="unconnected-(U1-IO3-Pad5)">
+      <node ref="U1" pin="5" pinfunction="IO3" pintype="bidirectional"/>
+    </net>
+    <net code="15" name="unconnected-(U1-IO4-Pad20)">
+      <node ref="U1" pin="20" pinfunction="IO4" pintype="bidirectional"/>
+    </net>
+    <net code="16" name="unconnected-(U1-IO5-Pad21)">
+      <node ref="U1" pin="21" pinfunction="IO5" pintype="bidirectional"/>
+    </net>
+    <net code="17" name="unconnected-(U1-IO6-Pad22)">
+      <node ref="U1" pin="22" pinfunction="IO6" pintype="bidirectional"/>
+    </net>
+    <net code="18" name="unconnected-(U1-IO7-Pad23)">
+      <node ref="U1" pin="23" pinfunction="IO7" pintype="bidirectional"/>
+    </net>
+    <net code="19" name="unconnected-(U1-IO8-Pad25)">
+      <node ref="U1" pin="25" pinfunction="IO8" pintype="bidirectional"/>
+    </net>
+    <net code="20" name="unconnected-(U1-IO9-Pad26)">
+      <node ref="U1" pin="26" pinfunction="IO9" pintype="bidirectional"/>
+    </net>
+    <net code="21" name="unconnected-(U1-IO18-Pad18)">
+      <node ref="U1" pin="18" pinfunction="IO18" pintype="bidirectional"/>
+    </net>
+    <net code="22" name="unconnected-(U1-IO19-Pad17)">
+      <node ref="U1" pin="17" pinfunction="IO19" pintype="bidirectional"/>
+    </net>
+    <net code="23" name="unconnected-(U1-RST-Pad7)">
+      <node ref="U1" pin="7" pinfunction="RST" pintype="input"/>
+    </net>
+    <net code="24" name="unconnected-(U1-RX-Pad28)">
+      <node ref="U1" pin="28" pinfunction="RX" pintype="bidirectional"/>
+    </net>
+    <net code="25" name="unconnected-(U1-TX-Pad29)">
+      <node ref="U1" pin="29" pinfunction="TX" pintype="bidirectional"/>
+    </net>
+  </nets>
+</export>
