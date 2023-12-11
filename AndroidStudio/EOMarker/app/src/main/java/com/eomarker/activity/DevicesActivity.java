@@ -49,11 +49,15 @@ public class DevicesActivity extends AppCompatActivity implements DeviceDiscover
             @Override
             public void onClick(View view) {
                 loadDevices();
-                Toast.makeText(getApplicationContext(), "Visualizing all devices!", Toast.LENGTH_SHORT).show();
                 for (Device device: devices) {
                 try {
                     MqttHandler mqttHandler = MainActivity.getMqttHandler();
-                    mqttHandler.publish("PM/EOMarkers/" + device.macAddress.replace(":", "") + "/visualize", "true");
+                    if(mqttHandler.connected()) {
+                        mqttHandler.publish("PM/EOMarkers/" + device.macAddress.replace(":", "") + "/visualize", "true");
+                        Toast.makeText(getApplicationContext(), "Visualizing all devices!", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "MQTT not connected, please refresh...", Toast.LENGTH_LONG).show();
+                    }
                 }catch (Exception e){}
             }
 
