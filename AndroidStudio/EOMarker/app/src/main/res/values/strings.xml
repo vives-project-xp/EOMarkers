@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">EOMarker</string>
-    <string name="MQTT_BROKER">projectmaster.devbit.be</string>
-    <string name="MQTT_USER">EOMarker</string>
-    <string name="MQTT_PASS">EOMarker</string>
+    <string name="MQTT_BROKER"></string>
+    <string name="MQTT_USER"></string>
+    <string name="MQTT_PASS"></string>
     <string name="settings">Settings</string>
     <string name="devices">Devices</string>
     <string name="reload">Reload</string>

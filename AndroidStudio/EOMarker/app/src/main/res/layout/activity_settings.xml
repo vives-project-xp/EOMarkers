@@ -65,18 +65,26 @@
             android:gravity="center"
             android:text="@string/password" />
 
-        <EditText
 
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/userPassword"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_below="@+id/text_userPassword"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
             android:gravity="left"
+            app:boxBackgroundColor="@color/white"
             android:textSize="20sp"
-            android:inputType="textPassword"/>
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_saveData"

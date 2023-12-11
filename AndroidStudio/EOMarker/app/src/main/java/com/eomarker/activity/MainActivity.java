@@ -2,6 +2,7 @@ package com.eomarker.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -150,6 +151,9 @@ public class MainActivity extends AppCompatActivity implements DeviceDiscoveryLi
     private void publishMessage(String topic, String message) {
         if (mqttHandler.connected()) {
             mqttHandler.publish(topic, message);
+        }else {
+            ConnectMQTT();
+            publishMessage(topic, message);
         }
     }
 
@@ -193,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements DeviceDiscoveryLi
     public void ConnectMQTT() {
         try {
             mqttHandler.disconnect();
+            initializeBrokerInfo();
             mqttHandler.connect(BROKER_URL, CLIENT_ID, CLIENT_PASS, this, this);
             updateStatus();
         } catch (Exception e) {

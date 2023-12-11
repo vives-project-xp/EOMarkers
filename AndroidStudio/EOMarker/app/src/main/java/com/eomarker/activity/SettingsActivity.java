@@ -16,12 +16,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.eomarker.R;
 import com.eomarker.storage.InternalStorage;
 import com.eomarker.storage.KeyValueStorage;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class SettingsActivity extends AppCompatActivity {
 
     EditText brokerURL;
     EditText userName;
-    EditText userPassword;
+    TextInputEditText userPassword;
     Context context;
 
     @Override
@@ -37,7 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         brokerURL = findViewById(R.id.brokerURL);
         userName = findViewById(R.id.userName);
-        userPassword = findViewById(R.id.userPassword);
+        userPassword = findViewById(R.id.etPassword);
 
         brokerURL.setText(KeyValueStorage.loadData(getApplicationContext(), "BROKER_URL", ""));
         userName.setText(KeyValueStorage.loadData(getApplicationContext(), "BROKER_USERNAME", ""));
