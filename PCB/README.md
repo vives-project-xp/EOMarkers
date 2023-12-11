@@ -2,14 +2,14 @@
 
 ## Important Note
 
-use PCB_ESP32-C3-DevKitM-1 or PCB_ESP32-C3-DevKitC-02
-but the pinout is the ***not*** same for both
+Use PCB_ESP32-C3-DevKitM-1 or PCB_ESP32-C3-DevKitC-02
+but the pinout is the ***not*** same for both!
 
-phisical layout is the same but the pinout is different
+Physical layout is the same but the pinout is different.
 
-make sure to use the right code for the right esp32-c3-devkit
+Make sure to use the right code for the right esp32-c3-devkit.
 
-pinout:
+Pinout:
 
 |component|ESP32-C3-DevKitM-1|ESP32-C3-DevKitC-02|
 |---|---|---|
@@ -38,16 +38,16 @@ pinout:
 
 ## PCB DEPRECATED
 
-first version of PCB for EOMaker
-is only for ESP32-C3-DevKitM-1
+First version of PCB for EOMaker
+is only for ESP32-C3-DevKitM-1.
 
-schematic and PCB:
+Schematic and PCB:
 
 ![PCB schematic](./PCB/sch.png)
 
 ![PCB](./PCB/PCB.png)
 
-### bom
+### BOM
 
 | Part | Value | Package | Description |
 | --- | --- | --- | --- |
