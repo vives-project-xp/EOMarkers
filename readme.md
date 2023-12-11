@@ -41,6 +41,6 @@ Dit is de onderkant van de kubus. Hier komt de pcb, batterijhouder en kabels ter
 
 # PCB
 
-De PCB is gewoon een paar connectoren voor de ESP, LED-strip, de Sensor en USB-C poort. Dit zijn female headers, zodat deze er perfect in passen. De connectoren zijn intern verbonden op de pcb. 
+De PCB is gewoon een paar connectoren voor de ESP, LED-strip, de Sensor, USB-C poort en een level-stack. Hierop worden female pinheaders gesoldeerd. De connectoren zijn intern verbonden op de pcb. 
 
-![PCB](./img/pcb.png "PCB")
+![PCB](./PCB/PCB_ESP32-C3-DevKitC-02/PCB.png "PCB")
