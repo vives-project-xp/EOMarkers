@@ -4,6 +4,7 @@
 
 - [Top part](#top)
 - [Bottom Part](#bottom)
+- [Wall](#wall)
 - [Afmetingen](#afmetingen-metric)
 - [Recommended Print Settings](#recommended-print-settings)
 
@@ -19,6 +20,12 @@ Dit is het hoofd gedeelte van de kubus. De sensor gaat in het gaatje vooraan met
 Dit is de onderkant van de kubus. Hier komen de pcb en batterijhouder terecht. Deze worden vastgelijmd met hete lijm. Er is een gat voor een USB kabel als secondaire stroom en een gat voor de schakelaar. Deze 2 prints worden samen geschroefd met een M3 schroef of bout. De pcb wordt op de pins geschoven met de USB-C connector op het verhoogje. Links van de schakelaar, tegen de muur, wordt de batterijhouder vastgelijmd met een margin tussen de 2 muren, zodat deze kan opengemaakt worden.
 
 ![Bottom](./img/3D_Bottom.png "bottom")
+
+# Wall
+
+Dit is het muurtje die licht blokkeert of doorlaat d.m.v. een pijl. Deze wordt gelasercut uit een 3mm triplex.
+
+![Wall](./img/3D_Wall.png "wall")
 
 # Afmetingen (metric)
 
