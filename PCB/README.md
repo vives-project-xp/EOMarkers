@@ -1,4 +1,4 @@
-# PCB For EOMaker
+# PCB For EO-Marker
 
 ## Important Note
 
