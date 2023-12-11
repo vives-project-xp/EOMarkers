@@ -23,7 +23,7 @@ Dit is de onderkant van de kubus. Hier komen de pcb en batterijhouder terecht. D
 
 # Wall
 
-Dit is het muurtje die licht blokkeert of doorlaat d.m.v. een pijl. Deze wordt gelasercut uit een 3mm triplex.
+Dit is het muurtje die licht blokkeert of doorlaat d.m.v. een pijl. Deze wordt gelasercut uit een 3mm triplex. Hierop aan de binnenkant wordt ook nog een reflecterende folie aangebracht, zodat het licht alleen maar door de pijl kan ontsnappen.
 
 ![Wall](./img/3D_Wall.png "wall")
 
