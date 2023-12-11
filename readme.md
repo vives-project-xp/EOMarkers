@@ -82,11 +82,6 @@ more info: [Arduino](./Arduino/README.md)
 
 # PCB
 
-<<<<<<< HEAD
-De PCB is gewoon een paar connectoren voor de ESP, LED-strip, de Sensor, USB-C poort en een level-stack. Hierop worden female pinheaders gesoldeerd. De connectoren zijn intern verbonden op de pcb. 
-
-![PCB](./PCB/PCB_ESP32-C3-DevKitC-02/PCB.png "PCB")
-=======
 more info: [PCB](./PCB/README.md)
 
 ## PCB print
@@ -100,4 +95,3 @@ De PCB bestaat uit een paar connectoren voor de ESP, LED-strip, sensor en USB-C 
 De schakeling bestaat uit 1 ESP, gevoed door een USB-kabel of een 5V batterij-pack parallel geschakeld op de j1 connector met een diode van battarij-pack naar connector (4 oplaadbare aa-batterijen). 3 female headers voor de ledstrips, 3 female headers voor de sensor, 8 female headers voor de USB-C poort en een diode voor stroom naar de batterijen tegen te houden.
 
 ![Schakeling](./PCB/PCB_ESP32-C3-DevKitC-02/sch.png "Schakeling")
->>>>>>> 08684c20a000d9ef962a046d56fd6b39fe433d7c
