@@ -1,8 +1,0 @@
-"Component Count:","7"
-"Ref","Qnty","Value","Cmp name","Footprint","Description","Vendor","DNP"
-"BT1","1","Battery","Battery","Battery:BatteryHolder_Keystone_2462_2xAA","Multiple-cell battery","",""
-"D1","1","LED","LED","LED_THT:LED_D5.0mm","Light emitting diode","",""
-"J1","1","Conn_01x03_Socket","Conn_01x03_Socket","Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical","Generic connector, single row, 01x03, script generated","",""
-"J2, J3","2","Conn_01x01_Pin","Conn_01x01_Pin","Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical","Generic connector, single row, 01x01, script generated","",""
-"Q2","1","BC547B","BC547B","BC547B:TO92250P510H770-3","npn transistor","",""
-"R2","1","R_US","R_US","Resistor_SMD:R_0805_2012Metric","Resistor, US symbol","",""
