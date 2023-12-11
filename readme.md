@@ -60,11 +60,11 @@
 
 more info: [3D Tekening](./3d%20tekening/README.md)
 
-Dit is het hoofd gedeelte van de kubus. De sensor gaat in het gaatje, de ledstrips gaan op de binnenkant van de palen en de kabels gaan door het middelste gedeelte. Een reflecterende folie wordt aangebracht op de middelste cilinder. Een difuser (plexiglas) wordt aangebracht in de verste gleuf en een triplex muurtje met of zonder de wegwijzing wordt aangebracht in de dichstbijzijnde gleuf.
+Dit is de basis van de kubus. De sensor wordt in het klein rond gaatje geplaatst, de ledstrips kleven op de binnenkant van de palen en de kabels worden weggestoken via het middelste gedeelte. Op dit gedeelte is een reflecterende folie aangebracht. Een diffuser (plexiglas) wordt in de verste gleuf geschoven en een triplex muurtje met of zonder de wegwijzing wordt aangebracht in de dichstbijzijnde gleuf.
 
 ![Top](./3d%20tekening/3D_Main.png "top")
 
-Dit is de onderkant van de kubus. Hier komt de pcb, batterijhouder en kabels terecht. Er is een gat voor een USB kabel als secondaire stroom. Deze 2 prints worden tesamen geschroefd met een M3 schroef of bout.
+Dit is de onderkant van de kubus. Hier komt de pcb, batterijhouder en kabels terecht. Er is een gat voor een USB kabel als secondaire stroom. Deze 2 prints worden tesamen geschroefd met een M3-schroef of bout.
 
 ![Bottom](./3d%20tekening/3D_Bottom.png "bottom")
 
@@ -86,7 +86,7 @@ more info: [PCB](./PCB/README.md)
 
 ## PCB print
 
-De PCB is gewoon een paar connectoren voor de ESP, LED-strip, de Sensor en USB-C poort. Dit zijn female headers, zodat deze er perfect in passen. De connectoren zijn intern verbonden op de pcb. 
+De PCB bestaat uit een paar connectoren voor de ESP, LED-strip, sensor en USB-C poort. Dit zijn female headers, zodat deze er perfect in passen. De connectoren zijn intern verbonden op de PCB. 
 
 ![PCB](./PCB/PCB_ESP32-C3-DevKitC-02/PCB.png "PCB")
 
