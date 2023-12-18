@@ -67,7 +67,6 @@ public class DevicesActivity extends AppCompatActivity implements DeviceDiscover
 
     private void loadDevices(
     ) {
-        updateStatus();
         // Create an ArrayList of device objects
         InternalStorage internalStorage = new InternalStorage(this);
         devices = internalStorage.getDevices();
@@ -75,19 +74,6 @@ public class DevicesActivity extends AppCompatActivity implements DeviceDiscover
 
         ListView listView = findViewById(R.id.listview_devices);
         listView.setAdapter(deviceAdapter);
-    }
-
-    public void updateStatus() {
-        try {
-            if (MainActivity.getMqttHandler().connected()) {
-                getSupportActionBar().setTitle("EOMarker (connected)");
-            } else {
-                getSupportActionBar().setTitle("EOMarker (disconnected)");
-            }
-        } catch (Exception e) {
-            getSupportActionBar().setTitle("EOMarker (no broker connection)");
-            //Log.e(TAG, "Error updating status", e);
-        }
     }
 
     @Override
