@@ -4,7 +4,7 @@
 > The boxes can be fitted with a plexi with Electronics-ICT and a
 > direction indication via an arrow.
 
-# layout github repo
+# Layout Github Repo
 
 ```bash
 .
@@ -26,6 +26,8 @@
 ├── img
 │   ├── qr.png
 │   └── project_canvas.png
+│   └── potentiometers.jpg
+│   └── schakelaar.jpg
 ├── PCB
 │   ├── PCB
 |   ├── PCB_ESP32-C3-DevKitM-1
@@ -38,8 +40,9 @@
 
 - [Planning](#planning)
 - [Canvas](#canvas)
-- [3D Tekening](#3d-drawing)
 - [Affiche](#affiche)
+- [How to use](#how-to-use)
+- [3D Tekening](#3d-drawing)
 - [Android Studio](#android-studio)
 - [Arduino](#arduino)
 - [PCB](#pcb)
@@ -56,21 +59,38 @@
 
 ![Canvas](./img/project_canvas.png "Canvas")
 
+# Affiche
+
+![Affiche](./Affiche/EO%20Markers%20Affiche.png "Affiche")
+
+# How to use
+
+1. It is important that the batteries are fully charged, as they are rechargeable. A USB-C port is provided as an alternative power supply.
+2. Turn the switch on.
+
+![schakelaar](./img/schakelaar.jpg "schakelaar")
+
+3. Wait about 10 seconds. The LED strips will then light up whenever the sensor, attached to the front of the marker, detects movement.
+4. You can change the distance at which the sensor detects movement and the duration of lighting by turning the potentiometers as shown in the image.
+
+![potentiometers](./img/potentiometers.jpg "potentiometers")
+
+5. Each time the light goes out, there is a period of 2.5 seconds before the sensor can detect movement again.
+6. After using the EO marker, switch it off and charge the batteries.
+
 # 3D drawing 
 
 more info: [3D Tekening](./3d%20tekening/readme.md)
 
-Dit is de basis van de kubus. De sensor wordt in het klein rond gaatje geplaatst, de ledstrips kleven op de binnenkant van de palen en de kabels worden weggestoken via het middelste gedeelte. Op dit gedeelte is een reflecterende folie aangebracht. Een diffuser (plexiglas) wordt in de verste gleuf geschoven en een triplex muurtje met of zonder de wegwijzing wordt aangebracht in de dichstbijzijnde gleuf.
+This is the base of the cube. The sensor is placed in the small round hole, the LED strips stick to the inside of the posts and the cables are inserted through the middle part. A reflective film has been applied to this area, which helps to spread the light around. A diffuser (plexiglass) is slid into the furthest slot and a plywood wall, with or without directions, is placed in the nearest slot.
 
 ![Top](./3d%20tekening/img/3D_Main1.png "top")![Top](./3d%20tekening/img/3D_Main2.png "top")
 
-Dit is de onderkant van de kubus. Hier komt de pcb, batterijhouder en kabels terecht. Er is een gat voor een USB kabel als secondaire stroom. Deze 2 prints worden tesamen geschroefd met een M3-schroef of bout.
+This is the bottom of the cube. This is where the PCB, battery holder and cables end up. A hole is provided for a USB cable as secondary power. These 2 prints are screwed together with an M3 screw or bolt.
 
 ![Bottom](./3d%20tekening/img/3D_Bottom.png "bottom")
 
-# Affiche
 
-![Affiche](./Affiche/EO%20Markers%20Affiche.png "Affiche")
 
 # Android Studio
 
@@ -86,12 +106,31 @@ more info: [PCB](./PCB/README.md)
 
 ## PCB print
 
-De PCB bestaat uit een paar connectoren voor de ESP, LED-strip, sensor en USB-C poort. Dit zijn female headers, zodat deze er perfect in passen. De connectoren zijn intern verbonden op de PCB. 
+The PCB consists of a pair of connectors for the ESP, LED strip, sensor and USB-C port. These are female headers, so they fit in perfectly. The connectors are internally connected on the PCB. 
 
 ![PCB](./PCB/PCB_ESP32-C3-DevKitC-02/PCB.png "PCB")
 
 ## PCB schematic
 
-De schakeling bestaat uit 1 ESP, gevoed door een USB-kabel of een 5V batterij-pack parallel geschakeld op de j1 connector met een diode van battarij-pack naar connector (4 oplaadbare aa-batterijen). 3 female headers voor de ledstrips, 3 female headers voor de sensor, 8 female headers voor de USB-C poort en een diode voor stroom naar de batterijen tegen te houden.
+The circuit consists of 1 ESP, powered by a USB cable or a 5V battery pack connected in parallel on the j1 connector with a diode from battery pack to connector (4 rechargeable AA batteries). 3 female headers for the LED strips, 3 female headers for the sensor, 8 female headers for the USB-C port and a diode to stop current to the batteries.
+
+Measurements:
+U LED-strips (off): 4,1V;
+U LED-strips (on): 3,1V
+
+U Batteries (leds off): 4.9V;
+U Batteries (leds on): 4.3V
+
+U Diode (leds off): 0.72V;
+U Diode (leds on): 0.86V
+
+U Sensor (leds off): 2.98V;
+U Sensor (leds on): 2.55V
+
+U ESP (leds off): 4.1V;
+U ESP (leds on): 3.45V
+
+
+
 
 ![Schakeling](./PCB/PCB_ESP32-C3-DevKitC-02/sch.png "Schakeling")

@@ -11,25 +11,25 @@
 
 # Top
 
-Dit is het hoofd gedeelte van de kubus. De sensor gaat in het gaatje vooraan met de kabels hiervan die door de cilinder gaan. Een reflecterende folie wordt aangebracht op deze cilinder. De ledstrips bevinden zich aan de schuine kant van de pillaren. Een difuser (plexiglas) wordt aangebracht in de verste gleuf en een triplex muurtje met of zonder de wegwijzing wordt aangebracht in de dichstbijzijnde gleuf.
+This is the main part of the cube. The sensor goes into the hole at the front with its cables going through the cylinder. A reflective foil is applied to this cylinder. The LED strips are located on the sloping side of the pillars. A diffuser (plexiglass) is placed in the furthest slot and a plywood wall, with or without directions, is placed in the nearest slot.
 
 ![Top](./img/3D_Main1.png "top")![Top](./img/3D_Main2.png "top")
 
 # Bottom
 
-Dit is de onderkant van de kubus. Hier komen de pcb en batterijhouder terecht. Deze worden vastgelijmd met hete lijm. Er is een gat voor een USB kabel als secondaire stroom en een gat voor de schakelaar. Deze 2 prints worden samen geschroefd met een M3 schroef of bout. De pcb wordt op de pins geschoven met de USB-C connector op het verhoogje. Links van de schakelaar, tegen de muur, wordt de batterijhouder vastgelijmd met een margin tussen de 2 muren, zodat deze kan opengemaakt worden.
+This is the bottom of the cube. This is where the PCB and battery holder end up. These are glued in place with hot glue. There is a hole for a USB cable that functions as a secondary power and a hole for the switch. These 2 prints are screwed together with an M3 screw or bolt. The PCB is slid onto the pins with the USB-C connector on the platform. To the left of the switch, against the wall, the battery holder is glued with a margin between the 2 walls, so that it can be opened.
 
 ![Bottom](./img/3D_Bottom.png "bottom")
 
 # Wall
 
-Dit is het muurtje die licht blokkeert of doorlaat d.m.v. een pijl. Deze wordt gelasercut uit een 3mm triplex. Hierop aan de binnenkant wordt ook nog een reflecterende folie aangebracht, zodat het licht alleen maar door de pijl kan ontsnappen.
+This is the wall that blocks or allows light to pass through an arrow. This is laser cut from 3mm plywood. A reflective foil is also applied to this on the inside, so that the light can only escape through the arrow.
 
 ![Wall](./img/3D_Wall.png "wall")
 
 # Afmetingen (metric)
 
-De kubus gemonteerd is 150x150x150 mm groot. De muurtjes hebben een grootte van 109x109x3 mm, waarvan 100x100 mm zichtbaar is.
+The cube assembled is 150x150x150 mm in size. The walls have a size of 109x109x3 mm, of which 100x100 mm is visible.
 
 # Recommended print settings
 
